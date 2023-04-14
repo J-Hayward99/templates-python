@@ -43,6 +43,7 @@ def run_file_check(check_file_name:str) -> None:                                
             if get_config_value("Included", "show_checks") == "True":
                 print(f"CHCK: Existence of \"{line}\" -> {existence}")
         
+        # MISSING TRIGGER
         if flag_missing_files:
             # STATE ISSUE
             print("CHCK: Failed Check -> Missing Files")
