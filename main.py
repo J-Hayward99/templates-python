@@ -9,6 +9,7 @@
 # Personal Modules
 import libs.included_tools as inc_tools
 
+
 # CONSTANTS
 # Included
 PROJECT_NAME        = inc_tools.get_config_value("Metadata", "project_name")        # What is the title of the program
@@ -18,6 +19,7 @@ PROJECT_YEAR        = inc_tools.get_config_value("Metadata", "project_year")    
 PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version")     # What is the current version
 
 # Program
+
 
 # LOOK-UP TABLES
 
