@@ -39,7 +39,7 @@ def main_pipeline():                                                            
     check_pipeline()                                                                #   # This is used to check, leave as pass if not needed
 
     # PROGRAM START
-    #
+    
 
     # SHUT DOWN
 
@@ -88,5 +88,3 @@ if __name__ == '__main__':
     _plan_
 
 """
-
-
