@@ -1,4 +1,6 @@
-# Default Documents Included With Structure
+# Check list file
+
+## Default Documents Included With Structure
 
 docs/
 docs/changelog.txt
@@ -14,5 +16,4 @@ LICENSE
 main.py
 README.md
 
-
-# Additional Checks
+## Additional Checks
