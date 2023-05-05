@@ -6,7 +6,7 @@
 # ============================================================================ #
 # INCLUDED MODULES
 import libs.included_tools.inc_utils as inc_tools
-import libs.included_tools.inc_logger as inc_logger
+import libs.included_tools.inc_logger as log
 
 
 # OFFICIAL MODULES
@@ -64,10 +64,9 @@ PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version") 
 # ============================================================================ #
 def main_pipeline():                                                                # This is the main pipeline of what the code runs
     # INITIATE PROGRAM
-    print(f"=== {PROJECT_NAME.upper()} ===")                                        #   # Program name
-    print(f"Written by {PROJECT_AUTHOR}, {PROJECT_YEAR}")                           #   # Program details
-    print()
-    print(f"BOOT: Version -> {PROJECT_VERSION}")                                    #   # Program version
+    log.none(f"=== {PROJECT_NAME.upper()} ===")                                     #   # Program name
+    log.none(f"Written by {PROJECT_AUTHOR}, {PROJECT_YEAR}\n")                      #   # Program details
+    log.boot(f"Version -> {PROJECT_VERSION}")                                       #   # Program version
 
     
     # CHECK PIPELINE
@@ -79,12 +78,12 @@ def main_pipeline():                                                            
     
 
     # SCRIPT SHUTDOWN
-    print("MAIN: Program Finished")
+    log.main("Program Finished")
 
 
 def check_pipeline():                                                               # This is the pipeline that runs checks if required
     # INITIALISE
-    print("CHCK: Running Checks")
+    log.check("Running Checks")
 
     # CHECK FILES
     inc_tools.run_file_check(".checks")                                             #   # Ensures all files and folders are present
@@ -93,7 +92,7 @@ def check_pipeline():                                                           
 def program_pipeline():                                                             # Runs the program proper
     # INITIATION
     # Prompt
-    print("MAIN: Running Program")
+    log.main("Running Program")
 
 
     # PROGRAM PROPER

@@ -1,11 +1,24 @@
-# This folder is used to hold the code that's inherent to the project
+"""
+This folder is used to hold the code that's inherent to the project
 
-# IMPORTS
+"""
+
+# ============================================================================ #
+#   IMPORTS
+# ============================================================================ #
+# OFFICIAL MODULES
 import configparser                                                                 # For the config function
 import os                                                                           # Checking existence of files
-import sys                                                                          # For exiting the program if the checks fail
-import logging
-# CODE
+
+
+# PERSONAL MODULES
+import libs.included_tools.inc_logger as log
+
+
+
+# ============================================================================ #
+#   CODE
+# ============================================================================ #
 def run_file_check(check_file_name:str) -> None:                                    # Checks the list of files to ensure all are there
     # INITIALISE
     flag_missing_files = False                                                      #   # Flag that triggers if there's a missing file
@@ -46,14 +59,14 @@ def run_file_check(check_file_name:str) -> None:                                
         # MISSING TRIGGER
         if flag_missing_files:
             # STATE ISSUE
-            print("CHCK: Failed Check -> Missing Files")
+            log.check("Failed Check -> Missing Files")
             
             # LIST FILE
             for file in list_missing_files:
-                print(f"CHCK: Missing File -> \"{file}\"")
+                log.check(f"Missing File -> \"{file}\"")
             
             # SHUTS DOWN PROGRAM
-            sys.exit("CHCK: Stopping Program")
+            log.exit("Stopping Program")
         
         print("CHCK: Checks Passed")
 
@@ -77,7 +90,7 @@ def convert_config_type(section:str, value:str, new_type:str):
     
     # CHECK    
     if new_type not in data_types:
-        sys.exit("ERRO: \"convert_config_type\" "
+        log.error("\"convert_config_type\" "
                  + f"-> Type is not Valid Type -> type=\"{new_type}\"")
 
     # CONVERT
@@ -95,6 +108,6 @@ def convert_config_type(section:str, value:str, new_type:str):
             return bool(config_value)
     
     except TypeError:
-        sys.exit("ERRO: \"convert_config_type\" -> Invalid Type Conversion "
+        log.error("\"convert_config_type\" -> Invalid Type Conversion "
                  + f"-> \"{config_value}\" cannot be \"{new_type}\"")
 

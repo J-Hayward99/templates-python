@@ -6,7 +6,8 @@ docs/
 docs/changelog.txt
 docs/requirements.txt
 libs/
-libs/included_tools.py
+libs/included_tools/inc_logger.py
+libs/included_tools/inc_utils.py
 res/
 tests/
 .checks
