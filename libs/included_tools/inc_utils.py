@@ -4,7 +4,7 @@
 import configparser                                                                 # For the config function
 import os                                                                           # Checking existence of files
 import sys                                                                          # For exiting the program if the checks fail
-
+import logging
 # CODE
 def run_file_check(check_file_name:str) -> None:                                    # Checks the list of files to ensure all are there
     # INITIALISE
@@ -67,3 +67,34 @@ def get_config_value(section:str, value:str) -> str:                            
 
     # RETURN
     return config[section][value].strip("\"")                                       #   # Removes un-needed ""
+
+
+
+def convert_config_type(section:str, value:str, new_type:str):
+    # INITIATE
+    config_value        = get_config_value(section, value)
+    data_types          = ["str", "int", "float", "bool"]
+    
+    # CHECK    
+    if new_type not in data_types:
+        sys.exit("ERRO: \"convert_config_type\" "
+                 + f"-> Type is not Valid Type -> type=\"{new_type}\"")
+
+    # CONVERT
+    try:
+        if new_type == "str":
+            return str(config_value)
+        
+        if new_type == "int":
+            return int(config_value)
+        
+        if new_type == "float":
+            return float(config_value)
+        
+        if new_type == "bool":
+            return bool(config_value)
+    
+    except TypeError:
+        sys.exit("ERRO: \"convert_config_type\" -> Invalid Type Conversion "
+                 + f"-> \"{config_value}\" cannot be \"{new_type}\"")
+

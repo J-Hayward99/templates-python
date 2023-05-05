@@ -1,58 +1,67 @@
 # LEGAL AND DOCUMENTATION
 # Copyright (c) 2023 James Hayward
 
-
-# DESCRIPTION
-"""
-    _summary_
-
-
-"""
-
-
-# NOTES
-"""
-    _notes_
-
-"""
+# ============================================================================ #
+#   IMPORTS
+# ============================================================================ #
+# INCLUDED MODULES
+import libs.included_tools.inc_utils as inc_tools
+import libs.included_tools.inc_logger as inc_logger
 
 
-# IMPORTS
-# Official Modules
+# OFFICIAL MODULES
 
 
-# Personal Modules
-import libs.included_tools as included
+# PERSONAL MODULES
 
 
-# CONSTANTS
-# Included
-PROJECT_NAME        = included.get_config_value("Metadata", "project_name")         # What is the title of the program
-PROJECT_AUTHOR      = included.get_config_value("Metadata", "project_author")       # Who made the file
-PROJECT_YEAR        = included.get_config_value("Metadata", "project_year")         # What is the current year
 
-PROJECT_VERSION     = included.get_config_value("Metadata", "project_version")      # What is the current version
+# ============================================================================ #
+#   CONSTANTS
+# ============================================================================ #
+# INCLUDED
+PROJECT_NAME        = inc_tools.get_config_value("Metadata", "project_name")        # What is the title of the program
+PROJECT_AUTHOR      = inc_tools.get_config_value("Metadata", "project_author")      # Who made the file
+PROJECT_YEAR        = inc_tools.get_config_value("Metadata", "project_year")        # What is the current year
 
-# Paths
-
-
-# Values
+PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version")     # What is the current version
 
 
-# LOOK-UP TABLES
+# DEFINITIONS
 
 
-# HASHMAPS
-# Initiation
+# PATHS
 
 
-# Hard-coded Hashmaps
+# VALUES
 
 
-# GLOBAL VARIABLES
+
+# ============================================================================ #
+#   LOOK-UP TABLES 
+# ============================================================================ #
 
 
-# MAIN PIPELINE
+
+# ============================================================================ #
+#   HASHMAPS
+# ============================================================================ #
+# INITIATION
+
+
+# HARD-CODED HASHMAPS
+
+
+
+# ============================================================================ #
+#   GLOBAL VARIABLES
+# ============================================================================ #
+
+
+
+# ============================================================================ #
+#   MAIN PIPELINE
+# ============================================================================ #
 def main_pipeline():                                                                # This is the main pipeline of what the code runs
     # INITIATE PROGRAM
     print(f"=== {PROJECT_NAME.upper()} ===")                                        #   # Program name
@@ -78,7 +87,7 @@ def check_pipeline():                                                           
     print("CHCK: Running Checks")
 
     # CHECK FILES
-    included.run_file_check(".checks")                                              #   # Ensures all files and folders are present
+    inc_tools.run_file_check(".checks")                                             #   # Ensures all files and folders are present
 
 
 def program_pipeline():                                                             # Runs the program proper
@@ -94,24 +103,24 @@ def program_pipeline():                                                         
 
 
 
-# CLASSES
+# ============================================================================ #
+#   CLASSES
+# ============================================================================ #
 
 
-# FUNCTIONS
-# Pipeline Functions
+
+# ============================================================================ #
+#   FUNCTIONS
+# ============================================================================ #
+# PIPELINE FUNCTIONS
 
 
-# Utility Functions
+# UTILITY FUNCTIONS
 
 
-# MAIN
+
+# ============================================================================ #
+#   MAIN
+# ============================================================================ #
 if __name__ == '__main__':
    main_pipeline()                                                                  # Runs the main pipeline
-
-
-
-# PLAN
-"""
-    _plan_
-
-"""
