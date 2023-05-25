@@ -54,7 +54,7 @@ def run_file_check(check_file_name:str) -> None:                                
             
             # PRINT THE EXISTANCE OF FILE
             if get_config_value("Included", "show_checks") == "True":
-                print(f"CHCK: Existence of \"{line}\" -> {existence}")
+                log.check(f"Existence of \"{line}\" -> {existence}")
         
         # MISSING TRIGGER
         if flag_missing_files:
@@ -68,7 +68,7 @@ def run_file_check(check_file_name:str) -> None:                                
             # SHUTS DOWN PROGRAM
             log.exit("Stopping Program")
         
-        print("CHCK: Checks Passed")
+        log.check("Checks Passed")
 
 
 

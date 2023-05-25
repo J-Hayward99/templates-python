@@ -60,6 +60,13 @@ PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version") 
 
 
 # ============================================================================ #
+#   SETUP
+# ============================================================================ #
+# LOAD SETTINGS
+log.change_threshold_level()
+
+
+# ============================================================================ #
 #   MAIN PIPELINE
 # ============================================================================ #
 def main_pipeline():                                                                # This is the main pipeline of what the code runs
@@ -93,6 +100,9 @@ def program_pipeline():                                                         
     # INITIATION
     # Prompt
     log.main("Running Program")
+
+
+    # GUARD CLAUSES
 
 
     # PROGRAM PROPER
