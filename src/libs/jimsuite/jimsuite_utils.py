@@ -12,20 +12,21 @@ import os                                                                       
 
 
 # PERSONAL MODULES
-import libs.included_tools.inc_logger as log
+import libs.jimsuite.jimsuite_logger as jim_log
 
-
+CONFIG_LOCATION = ""
+CHECKS_LOCATION = ""
 
 # ============================================================================ #
 #   CODE
 # ============================================================================ #
-def run_file_check(check_file_name:str) -> None:                                    # Checks the list of files to ensure all are there
+def run_file_check() -> None:                                                       # Checks the list of files to ensure all are there
     # INITIALISE
     flag_missing_files = False                                                      #   # Flag that triggers if there's a missing file
     list_missing_files = []                                                         #   # Archives a list of missing files
 
     # OPEN FILE
-    with open(check_file_name, "r") as file:
+    with open(CHECKS_LOCATION, "r") as file:
         # LINES TO LIST
         file_lines = file.readlines()
 
@@ -54,21 +55,21 @@ def run_file_check(check_file_name:str) -> None:                                
             
             # PRINT THE EXISTANCE OF FILE
             if get_config_value("Included", "show_checks") == "True":
-                log.check(f"Existence of \"{line}\" -> {existence}")
+                jim_log.check(f"Existence of \"{line}\" -> {existence}")
         
         # MISSING TRIGGER
         if flag_missing_files:
             # STATE ISSUE
-            log.check("Failed Check -> Missing Files")
+            jim_log.check("Failed Check -> Missing Files")
             
             # LIST FILE
             for file in list_missing_files:
-                log.check(f"Missing File -> \"{file}\"")
+                jim_log.check(f"Missing File -> \"{file}\"")
             
             # SHUTS DOWN PROGRAM
-            log.exit("Stopping Program")
+            jim_log.exit("Stopping Program")
         
-        log.check("Checks Passed")
+        jim_log.check("Checks Passed")
 
 
 
@@ -76,12 +77,32 @@ def run_file_check(check_file_name:str) -> None:                                
 def get_config_value(section:str, value:str) -> str:                                # Streamlines the config value acquisition
     # CONFIG INITIATION
     config = configparser.ConfigParser()                                            #   # Initiates Parser
-    config.read("config.ini")                                                       #   # Hardcoded config.ini file
+    config.read(CONFIG_LOCATION)                                                    #   # Hardcoded config.ini file
 
     # RETURN
     return config[section][value].strip("\"")                                       #   # Removes un-needed ""
 
+def set_config_location(location:str) -> None:
+    if not isinstance(location, str):
+        location = str(location)
+    
+    if not os.path.isfile(location):
+        jim_log.error("Config location does not exist -> " + location)
+    
+    global CONFIG_LOCATION
+    CONFIG_LOCATION = location
+    jim_log.boot(f"Set config.ini location to '{location}'")
 
+def set_checks_location(location:str) -> None:
+    if not isinstance(location, str):
+        location = str(location)
+    
+    if not os.path.isfile(location):
+        jim_log.error(".checks location does not exist -> " + location)
+    
+    global CHECKS_LOCATION
+    CHECKS_LOCATION = location
+    jim_log.boot(f"Set .checks location to '{location}'")
 
 def convert_config_type(section:str, value:str, new_type:str):
     # INITIATE
@@ -90,7 +111,7 @@ def convert_config_type(section:str, value:str, new_type:str):
     
     # CHECK    
     if new_type not in data_types:
-        log.error("\"convert_config_type\" "
+        jim_log.error("\"convert_config_type\" "
                  + f"-> Type is not Valid Type -> type=\"{new_type}\"")
 
     # CONVERT
@@ -108,6 +129,6 @@ def convert_config_type(section:str, value:str, new_type:str):
             return bool(config_value)
     
     except TypeError:
-        log.error("\"convert_config_type\" -> Invalid Type Conversion "
+        jim_log.error("\"convert_config_type\" -> Invalid Type Conversion "
                  + f"-> \"{config_value}\" cannot be \"{new_type}\"")
 

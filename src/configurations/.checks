@@ -2,19 +2,46 @@
 
 ## Default Documents Included With Structure
 
+### Documents
+
 docs/
-docs/changelog.txt
+docs/CHANGELOG.MD
+docs/plan.md
+docs/README.MD
 docs/requirements.txt
-libs/
-libs/included_tools/inc_logger.py
-libs/included_tools/inc_utils.py
+docs/readme_imgs/
+docs/readme_imgs/.gitkeep
+
+### Resources
+
 res/
+res/.gitkeep
+
+### Source Files
+
+src/
+src/main.py
+src/configurations/
+src/configurations/.checks
+src/configurations/config.ini
+src/libs/
+src/libs/jimsuite/jimsuite_logger.py
+src/libs/jimsuite/jimsuite_utils.py
+
+### Tests
+
 tests/
-.checks
+tests/functional_tests/
+tests/intergration_tests/
+tests/jimsuite_tests/
+tests/jimsuite_tests/test_jimsuite_logger.py
+tests/jimsuite_tests/test_jimsuite_utils.py
+tests/unit_tests/
+tests/pytest.ini
+
+### Misc
+
 .gitignore
-config.ini
 LICENSE
-main.py
-README.md
 
 ## Additional Checks

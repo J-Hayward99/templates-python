@@ -5,8 +5,8 @@
 #   IMPORTS
 # ============================================================================ #
 # INCLUDED MODULES
-import libs.included_tools.inc_utils as inc_tools
-import libs.included_tools.inc_logger as log
+import libs.jimsuite.jimsuite_utils as jim_tools
+import libs.jimsuite.jimsuite_logger as jim_log
 
 
 # OFFICIAL MODULES
@@ -15,16 +15,25 @@ import libs.included_tools.inc_logger as log
 # PERSONAL MODULES
 
 
+# ============================================================================ #
+#   SETUP
+# ============================================================================ #
+# LOAD SETTINGS
+jim_tools.set_config_location("./src/configurations/config.ini")
+jim_tools.set_checks_location("./src/configurations/.checks")
+jim_log.change_threshold_level()
+
+
 
 # ============================================================================ #
 #   CONSTANTS
 # ============================================================================ #
 # INCLUDED
-PROJECT_NAME        = inc_tools.get_config_value("Metadata", "project_name")        # What is the title of the program
-PROJECT_AUTHOR      = inc_tools.get_config_value("Metadata", "project_author")      # Who made the file
-PROJECT_YEAR        = inc_tools.get_config_value("Metadata", "project_year")        # What is the current year
+PROJECT_NAME        = jim_tools.get_config_value("Metadata", "project_name")        # What is the title of the program
+PROJECT_AUTHOR      = jim_tools.get_config_value("Metadata", "project_author")      # Who made the file
+PROJECT_YEAR        = jim_tools.get_config_value("Metadata", "project_year")        # What is the current year
 
-PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version")     # What is the current version
+PROJECT_VERSION     = jim_tools.get_config_value("Metadata", "project_version")     # What is the current version
 
 
 # DEFINITIONS
@@ -60,20 +69,13 @@ PROJECT_VERSION     = inc_tools.get_config_value("Metadata", "project_version") 
 
 
 # ============================================================================ #
-#   SETUP
-# ============================================================================ #
-# LOAD SETTINGS
-log.change_threshold_level()
-
-
-# ============================================================================ #
 #   MAIN PIPELINE
 # ============================================================================ #
 def main_pipeline():                                                                # This is the main pipeline of what the code runs
     # INITIATE PROGRAM
-    log.none(f"=== {PROJECT_NAME.upper()} ===")                                     #   # Program name
-    log.none(f"Written by {PROJECT_AUTHOR}, {PROJECT_YEAR}\n")                      #   # Program details
-    log.boot(f"Version -> {PROJECT_VERSION}")                                       #   # Program version
+    jim_log.none(f"=== {PROJECT_NAME.upper()} ===")                                     #   # Program name
+    jim_log.none(f"Written by {PROJECT_AUTHOR}, {PROJECT_YEAR}\n")                      #   # Program details
+    jim_log.boot(f"Version -> {PROJECT_VERSION}")                                       #   # Program version
 
     
     # CHECK PIPELINE
@@ -85,21 +87,21 @@ def main_pipeline():                                                            
     
 
     # SCRIPT SHUTDOWN
-    log.main("Program Finished")
+    jim_log.main("Program Finished")
 
 
 def check_pipeline():                                                               # This is the pipeline that runs checks if required
     # INITIALISE
-    log.check("Running Checks")
+    jim_log.check("Running Checks")
 
     # CHECK FILES
-    inc_tools.run_file_check(".checks")                                             #   # Ensures all files and folders are present
+    jim_tools.run_file_check()                                                      #   # Ensures all files and folders are present
 
 
 def program_pipeline():                                                             # Runs the program proper
     # INITIATION
     # Prompt
-    log.main("Running Program")
+    jim_log.main("Running Program")
 
 
     # GUARD CLAUSES

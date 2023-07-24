@@ -7,7 +7,7 @@
 # ============================================================================ #
 # OFFICIAL MODULES
 import sys
-
+import re
 
 # PERSONAL MODULES
 
@@ -27,7 +27,6 @@ _CODE_LENGTH    = 4
 
 # DEFAULTS
 _DEFAULT_LEVEL_VALUE    = 20
-
 
 # ============================================================================ #
 #   LOOK-UP TABLES 
@@ -101,67 +100,12 @@ def none(message:str) -> None:
 
 
 # Level Handler Block
-def add_level(level_name:str, level_code:str, level_value:int) -> None:
-    # INITATION
-    string_parameters = [level_name, level_code]
+def change_threshold_level(new_level:str|int=_DEFAULT_LEVEL_VALUE):
+    program(_change_threshold_level(new_level))
 
-    # GUARD CLAUSES
-    # Type Check
-    for parameter in string_parameters:
-        if not isinstance(parameter, str):                                          #   # Checks if the input is a string
-            error(
-                f"\"{parameter}\" is not a string -> "
-                + f"level_name_type=\"{type(parameter)}\""
-            )
+def change_threshold_level(new_level:str|int=_DEFAULT_LEVEL_VALUE):
+    boot(_change_threshold_level(new_level))
 
-    # Level Name Specific Checks
-    if level_name.upper() != level_name:                                            #   # Enforces the string is uppercase
-        level_name = level_name.upper()
-    
-
-    # Level Code Specific Checks
-    if len(level_code) != _CODE_LENGTH:                                             #   # Checks that the code length is correct
-        error(
-            f"Code length is not \"{_CODE_LENGTH}\" characters long -> "
-            + f"code=\"{level_code}\", code_length=\"{len(level_code)}\""
-        )
-    
-    if level_code.upper() != level_code:                                            #   # Enforces the string is uppercase
-        level_code = level_code.upper()
-
-    # Level Value Specific Checks
-    if not isinstance(level_value, int):
-            error(
-                f"\"{level_value}\" is not a integer -> "
-                + f"level_name_type=\"{type(level_value)}\""
-            )
-    
-    # Existence Check
-    for level in _name_to_level:                                                    #   # Iterates through hashmap
-        if level_name == level:                                                     #   # Checks if the level name already exists
-            error(f"Cannot add level -> \"{level_name}\" already exists")
-
-        if level_code == _name_to_level[level][_LEVELS_CODE]:                       #   # Checks if the level code already exists
-            error(f"Cannot add level -> Code \"{level_code}\" already  "
-                  + f"exists for level=\"{level}\""
-            )
-
-        if level_value == _name_to_level[level][_LEVELS_VALUE]:                     #   # Checks if the level value already exists
-            error(f"Cannot add level -> Value \"{level_value}\" already "
-                  + f"exists for level=\"{level}\""
-            )
-
-
-    # FUNCTION PROPER
-    # FIXME Need to do
-    # Informs that the entity is added
-    info(
-        "Added level -> "
-         + f"\"{level_name}\" : [\"{level_code}\", {level_value}]"
-    )
-
-def change_threshold_level(new_level=_DEFAULT_LEVEL_VALUE):
-    _update_settings("level_threshold", new_level)
 
 # UTILITY FUNCTIONS
 def _build_text(text:str, level:str="NOTSET") -> None:
@@ -172,20 +116,32 @@ def _build_text(text:str, level:str="NOTSET") -> None:
     if level == "NOTSET":                                                           #   # NOTSET removes prefix
         prefix = ""
 
+    text = str(text)
+
     # FUNCTION PROPER
-    if _check_level(level):
+    if _check_enabled_level(level):
         if level == "EXIT" or level == "ERROR":                                     #   # Checks that the level is exitable
             sys.exit(prefix + text)
         else:
             print(prefix + text)
     
-
-def _update_settings(setting_name:str, value:int) -> None:
-    # REVIEW Need to implement
-    # FIXME needs to account for non-stringd and non ints
+def _update_settings(setting_name:str, value:int) -> str:
+    # Guard Clauses
+    if not isinstance(value, int):
+        error("Bad Value -> Value is not int")
+    
+    if _settings.get(setting_name) == None:
+        error("Bad Setting Name -> Name is not in Settings")
+    
+    # Change setting
+    temp_setting_value = _settings[setting_name]
+    
     _settings[setting_name] = value
+    
+    return (f"Setting '{setting_name}' changed from "
+        + f"'{temp_setting_value}' to '{value}'")
 
-def _check_level(level_to_check:str) -> bool:
+def _check_enabled_level(level_to_check:str) -> bool:
     # INITATION
     level_value         = _name_to_level[level_to_check][_LEVELS_VALUE]
     settings_threshold  = _settings["level_threshold"]
@@ -196,6 +152,18 @@ def _check_level(level_to_check:str) -> bool:
     
     return False
 
+def _change_threshold_level(new_level:str|int=_DEFAULT_LEVEL_VALUE):
+    # Name Conversion
+    if isinstance(new_level, str) and (new_level in _name_to_level):
+        new_level = _name_to_level[new_level][1]
 
-
+    # Guard Clauses
+    if not isinstance(new_level, int):
+        error("Threshold value not recognised -> Value is not an integer -> "
+            + str(new_level))
+    
+    if new_level < 0:
+        error("Bad threshold value -> Value is below zero -> " + str(new_level))
+    
+    return _update_settings("level_threshold", new_level)
 
